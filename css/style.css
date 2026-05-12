@@ -371,9 +371,6 @@ body {
 
 /* TABLET */
 @media (max-width: 992px) {
-    body {
-        padding-top: 120px;
-    }
 
     .app-header-container,
     .page-content,
@@ -382,13 +379,8 @@ body {
         width: 92%;
     }
 
-    .app-header-container {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
     .search-form {
-        width: 100%;
+        width: 60%;
     }
 
     .page-content {
@@ -436,10 +428,6 @@ body {
 
 /* MOBILE */
 @media (max-width: 768px) {
-    body {
-        padding-top: 140px;
-    }
-
     .app-header-container,
     .page-content,
     .product-section,
@@ -556,9 +544,6 @@ body {
 
 /* SMALL MOBILE */
 @media (max-width: 480px) {
-    body {
-        padding-top: 150px;
-    }
 
     .page-content {
         height: 220px;
