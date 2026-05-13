@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
             setTimeout(() => {
                 window.location.href = href;
-            }, 320);
+            }, 120);
         });
     });
 });
