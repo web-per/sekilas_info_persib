@@ -11,20 +11,6 @@ body {
     padding-top: 84px;
 }
 
-.page-transition-overlay {
-    position: fixed;
-    inset: 0;
-    background: #fff;
-    opacity: 1;
-    pointer-events: none;
-    z-index: 9999;
-    transition: opacity 0.3s ease;
-}
-
-.page-transition-overlay.fade-out {
-    opacity: 0;
-}
-
 @keyframes fadeInUp {
     from {
         opacity: 0;
