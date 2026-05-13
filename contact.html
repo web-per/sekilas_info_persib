@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/contact.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="script.js"></script>
+    <title>Kontak - Sekilas Info Persib</title>
+</head>
+
+<body>
+    <header class="app-header">
+        <div class="app-header-container">
+            <div class="logo-wrap">
+                <img src="img/Logo-SIP.png" alt="Logo SIP" class="logo-icon">
+                <div>
+                    <span class="logo-title">Sekilas Info</span>
+                    <span class="logo-subtitle">Persib</span>
+                </div>
+            </div>
+
+            <form class="search-form" action="#" method="get">
+                <input type="search" name="q" placeholder="Cari..." aria-label="Cari" class="search-input">
+                <button type="submit" class="search-button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+        </div>
+    </header>
+
+    <main class="contact-page">
+        <section class="contact-section">
+            <div class="contact-intro">
+                <h1>Hubungi Kami</h1>
+                <p>Silakan kirim pertanyaan atau pesan mengenai merchandise Persib. Tim kami akan merespon secepatnya.</p>
+            </div>
+
+            <div class="contact-layout">
+                <div class="contact-card">
+                    <i class="fas fa-phone-alt"></i>
+                    <h2>Telepon</h2>
+                    <p>+62 882 0021 25311</p>
+                </div>
+                <div class="contact-card">
+                    <i class="fas fa-envelope"></i>
+                    <h2>Email</h2>
+                    <p>info@sekilasinfopersib.co.id</p>
+                </div>
+                <div class="contact-card">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h2>Lokasi</h2>
+                    <p>Jl. Pangeran Kornel No. 8, Bandung</p>
+                </div>
+            </div>
+
+            <form class="contact-form">
+                <div class="form-row">
+                    <label for="name">Nama</label>
+                    <input type="text" id="name" name="name" placeholder="Nama lengkap">
+                </div>
+                <div class="form-row">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Email Anda">
+                </div>
+                <div class="form-row">
+                    <label for="message">Pesan</label>
+                    <textarea id="message" name="message" rows="5" placeholder="Tulis pesan Anda..."></textarea>
+                </div>
+                <button type="submit" class="cta-button">Kirim Pesan</button>
+            </form>
+        </section>
+    </main>
+
+    <nav class="bottom-menu">
+        <div class="container">
+            <a href="index.html" class="menu-item">
+                <i class="fas fa-home icon"></i>
+                <span class="label">Beranda</span>
+            </a>
+            <a href="contact.html" class="menu-item active">
+                <i class="fas fa-phone icon"></i>
+                <span class="label">Kontak</span>
+            </a>
+        </div>
+    </nav>
+</body>
+
+</html>

@@ -11,6 +11,54 @@ body {
     padding-top: 84px;
 }
 
+.page-transition-overlay {
+    position: fixed;
+    inset: 0;
+    background: #fff;
+    opacity: 1;
+    pointer-events: none;
+    z-index: 9999;
+    transition: opacity 0.35s ease;
+}
+
+.page-transition-overlay.fade-out {
+    opacity: 0;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes floatIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    will-change: opacity, transform;
+}
+
+.scroll-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 .app-header {
     position: fixed;
     top: 0;
@@ -145,6 +193,7 @@ body {
     text-align: center;
 
     color: #fff;
+    animation: fadeInUp 0.8s ease both;
 }
 
 .hero h1 {
@@ -157,6 +206,9 @@ body {
     font-size: 18px;
     line-height: 1.6;
     color: #f1f1f1;
+    opacity: 0.95;
+    animation: floatIn 0.95s ease both;
+    animation-delay: 0.1s;
 }
 
 .about-brand {
@@ -312,8 +364,8 @@ body {
 }
 
 .product-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 22px 40px rgba(0, 51, 160, 0.14);
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 26px 48px rgba(0, 51, 160, 0.16);
 }
 
 .product-image {
@@ -360,6 +412,18 @@ body {
     padding: 28px 24px;
     border-radius: 20px;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.benefit-card:nth-child(1) {
+    animation-delay: 0.14s;
+}
+
+.benefit-card:nth-child(2) {
+    animation-delay: 0.20s;
+}
+
+.benefit-card:nth-child(3) {
+    animation-delay: 0.26s;
 }
 
 .benefit-card i {
@@ -493,9 +557,13 @@ body {
     border-radius: 999px;
 
     font-weight: 700;
-    transition: 0.2s ease;
+    transition: transform 0.2s ease, background 0.2s ease;
 
     white-space: nowrap;
+}
+
+.whatsapp-button:hover {
+    transform: translateY(-3px);
 }
 
 .whatsapp-button:hover {

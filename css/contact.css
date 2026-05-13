@@ -1,0 +1,153 @@
+.contact-page {
+    width: 80%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.contact-section {
+    width: 100%;
+    max-width: 900px;
+    padding: 40px;
+    border-radius: 28px;
+}
+
+.contact-intro {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.contact-intro h1 {
+    font-size: 34px;
+    color: #0033A0;
+    margin-bottom: 12px;
+}
+
+.contact-intro p {
+    color: #4a4a4a;
+    line-height: 1.75;
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+.contact-layout {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin-bottom: 32px;
+}
+
+.contact-card {
+    border-radius: 24px;
+    padding: 26px;
+    text-align: center;
+}
+
+.contact-card i {
+    font-size: 28px;
+    color: #0033A0;
+    margin-bottom: 14px;
+}
+
+.contact-card h2 {
+    font-size: 18px;
+    color: #0033A0;
+    margin-bottom: 10px;
+}
+
+.contact-card p {
+    color: #4a4a4a;
+    line-height: 1.7;
+}
+
+.contact-form {
+    display: grid;
+    gap: 18px;
+}
+
+.form-row {
+    display: grid;
+    gap: 10px;
+}
+
+.form-row label {
+    font-weight: 700;
+    color: #0033A0;
+}
+
+.form-row input,
+.form-row textarea {
+    width: 100%;
+    padding: 16px 18px;
+    border-radius: 18px;
+    border: 1px solid rgba(0, 51, 160, 0.15);
+    background: #f8fbff;
+    color: #0f245d;
+    font-size: 15px;
+    resize: vertical;
+}
+
+.form-row input:focus,
+.form-row textarea:focus {
+    outline: none;
+    border-color: #0033A0;
+}
+
+.contact-form .cta-button {
+    padding: 16px 32px;
+    background: #0033A0;
+    color: white;
+    border-radius: 999px;
+    border: none;
+}
+
+.contact-form .cta-button:hover {
+    background: #002266;
+}
+
+@media (max-width: 992px) {
+
+    .contact-page {
+        width: 100%;
+    }
+
+    .contact-section {
+        padding: 20px 14px;
+    }
+
+    .contact-intro h1 {
+        font-size: 24px;
+    }
+
+    .contact-intro p {
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    .contact-layout {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        margin-bottom: 20px;
+    }
+
+    .contact-card {
+        padding: 12px 6px;
+        border-radius: 14px;
+    }
+
+    .contact-card i {
+        font-size: 18px;
+        margin-bottom: 8px;
+    }
+
+    .contact-card h2 {
+        font-size: 11px;
+        margin-bottom: 4px;
+    }
+
+    .contact-card p {
+        font-size: 8px;
+        line-height: 1.4;
+        word-break: break-word;
+    }
+}
