@@ -126,7 +126,14 @@ body {
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.45);
+
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.416) 0%,
+        rgba(0, 0, 0, 0.416) 50%,
+        rgb(0, 0, 0) 100%
+    );
+
     z-index: 1;
 }
 
@@ -494,6 +501,18 @@ body {
 .whatsapp-button:hover {
     transform: translateY(-2px);
     background: #f5f5f5;
+}
+
+.no-results {
+    width: 100%;
+    padding: 18px 22px;
+    margin-top: 24px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 18px;
+    color: #0033A0;
+    font-weight: 700;
+    border: 1px solid rgba(0, 51, 160, 0.15);
+    text-align: center;
 }
 
 .bottom-menu {
