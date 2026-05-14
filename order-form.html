@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .order-form-page {
+            max-width: 720px;
+            margin: auto;
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(10px);
+            padding: 35px;
+            border-radius: 24px;
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.15),
+                0 0 0 1px rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(to right, #004aad, #1d7fff);
+        }
+
+        .form-title {
+            text-align: center;
+            color: #003d7a;
+            margin-bottom: 10px;
+            font-size: 34px;
+            font-weight: 800;
+        }
+
+        .form-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 35px;
+            font-size: 15px;
+        }
+
+        .success-message {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border: 1px solid #c3e6cb;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #1d1d1d;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px 16px;
+            border: 1.5px solid #d9d9d9;
+            border-radius: 14px;
+            font-size: 15px;
+            font-family: inherit;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+            background: #fff;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #0056c7;
+            box-shadow: 0 0 0 4px rgba(0, 86, 199, 0.12);
+            transform: translateY(-1px);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .readonly-field {
+            background: #f1f4f9 !important;
+            color: #003d7a;
+            font-weight: 600;
+            cursor: not-allowed;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .form-row .form-group {
+            margin-bottom: 0;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(to right, #003d7a, #0056c7);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            box-shadow: 0 8px 20px rgba(0, 61, 122, 0.25);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(0, 61, 122, 0.35);
+        }
+
+        .submit-btn:active {
+            transform: scale(0.98);
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 18px;
+            color: #003d7a;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .back-link:hover {
+            color: #0056c7;
+        }
+
+        /* Toast Notification */
+        .toast-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .toast {
+            background: #fff;
+            padding: 24px 32px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            min-width: 320px;
+            opacity: 0;
+            transform: scale(0.8) translateY(20px);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .toast::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, currentColor, transparent);
+            animation: toastProgress 2s linear forwards;
+        }
+
+        @keyframes toastProgress {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        .toast-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .toast-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .toast-title {
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .toast-message {
+            font-size: 14px;
+            font-weight: 500;
+            opacity: 0.8;
+        }
+
+        .toast.error {
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
+            color: #c71c1c;
+            border-left: 5px solid #dc3545;
+        }
+
+        .toast.error .toast-icon {
+            animation: errorShake 0.5s ease-in-out;
+        }
+
+        .toast.success {
+            background: linear-gradient(135deg, #f1f8f4 0%, #e8f5eb 100%);
+            color: #155724;
+        }
+
+        .toast.success .toast-icon {
+            animation: successBounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes errorShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        @keyframes successBounce {
+            0% { transform: scale(0) rotate(-45deg); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1) rotate(0); }
+        }
+
+        /* MOBILE */
+        @media (max-width: 768px) {
+            .order-form-page {
+                padding: 20px 14px 0px;
+            }
+
+            .form-container {
+                padding: 24px 18px;
+                border-radius: 20px;
+            }
+
+            .form-title {
+                font-size: 28px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .submit-btn {
+                font-size: 16px;
+                padding: 15px;
+            }
+
+            .toast {
+                min-width: 280px;
+                padding: 18px 24px;
+                font-size: 15px;
+            }
+
+            .toast-icon {
+                font-size: 22px;
+            }
+
+            .toast-title {
+                font-size: 15px;
+            }
+
+            .toast-message {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .toast {
+                min-width: 260px;
+                padding: 16px 20px;
+            }
+
+            .toast-icon {
+                font-size: 20px;
+            }
+
+            .toast-title {
+                font-size: 14px;
+            }
+
+            .toast-message {
+                font-size: 12px;
+            }
+        }
+    </style>
+    <script src="script.js"></script>
+    <title>Formulir Pemesanan - SIP</title>
+</head>
+
+<body>
+    <header class="app-header">
+        <div class="app-header-container">
+            <div class="logo-wrap">
+                <img src="img/Logo-SIP.png" alt="Logo SIP" class="logo-icon">
+                <div>
+                    <span class="logo-title">Sekilas Info</span>
+                    <span class="logo-subtitle">Persib</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="order-form-page">
+        <div class="form-container">
+            <h1 class="form-title">Formulir Pemesanan</h1>
+            <p class="form-subtitle">
+                Lengkapi data pemesanan merchandise Persib Anda dengan benar.
+            </p>
+            <div class="success-message" id="successMessage">
+                ✓ Pesanan Anda berhasil dikirim! Kami akan segera menghubungi Anda.
+            </div>
+            <form id="orderForm">
+                <div class="form-group">
+                    <label for="productName">Nama Produk *</label>
+                    <input type="text" id="productName" name="productName" readonly class="readonly-field" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="price">Harga *</label>
+                        <input type="text" id="price" name="price" readonly class="readonly-field" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="size">Ukuran *</label>
+                        <select id="size" name="size" required>
+                            <option value="">Pilih ukuran</option>
+                            <option value="S">S (Kecil)</option>
+                            <option value="M">M (Sedang)</option>
+                            <option value="L">L (Besar)</option>
+                            <option value="XL">XL (Ekstra Besar)</option>
+                            <option value="XXL">XXL (Ekstra Ekstra Besar)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 20px;">
+                    <label for="fullName">Nama Lengkap *</label>
+                    <input type="text" id="fullName" name="fullName" placeholder="Masukkan nama lengkap Anda" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Alamat Pengiriman *</label>
+                    <textarea id="address" name="address" placeholder="Masukkan alamat lengkap pengiriman Anda"
+                        required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Kirim Pesanan</button>
+            </form>
+        </div>
+    </main>
+
+    <nav class="bottom-menu">
+        <div class="container">
+            <a href="index.html" class="menu-item">
+                <i class="fas fa-home icon"></i>
+                <span class="label">Beranda</span>
+            </a>
+            <a href="contact.html" class="menu-item">
+                <i class="fas fa-phone icon"></i>
+                <span class="label">Kontak</span>
+            </a>
+        </div>
+    </nav>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        // Fungsi untuk menampilkan toast notification dengan upgrade styling
+        function showToast(title, message = '', type = 'success', duration = 2000) {
+            const toastContainer = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            
+            let icon = '';
+            if (type === 'success') {
+                icon = '✓';
+            } else if (type === 'error') {
+                icon = '⚠';
+            }
+            
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <div class="toast-icon">${icon}</div>
+                <div class="toast-content">
+                    <div class="toast-title">${title}</div>
+                    ${message ? `<div class="toast-message">${message}</div>` : ''}
+                </div>
+            `;
+            
+            toastContainer.appendChild(toast);
+            
+            // Trigger animation
+            setTimeout(() => toast.classList.add('show'), 10);
+            
+            // Hapus toast setelah duration
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 400);
+            }, duration);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Ambil parameter dari URL
+            const params = new URLSearchParams(window.location.search);
+            const productName = params.get('product');
+            const price = params.get('price');
+
+            // Isi field otomatis
+            if (productName) {
+                document.getElementById('productName').value = decodeURIComponent(productName);
+            }
+            if (price) {
+                document.getElementById('price').value = decodeURIComponent(price);
+            }
+
+            // Handle submit form
+            const orderForm = document.getElementById('orderForm');
+            orderForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const fullName = document.getElementById('fullName').value.trim();
+                const address = document.getElementById('address').value.trim();
+                const productName = document.getElementById('productName').value;
+                const size = document.getElementById('size').value;
+                const price = document.getElementById('price').value;
+
+                if (!fullName || !address || !size) {
+                    showToast('Oops!', 'Harap isi semua field yang bertanda *', 'error', 2000);
+                    return;
+                }
+
+                // Format pesan untuk WhatsApp
+                const message = `*PESANAN BARU*\n\n` +
+                    `📦 Produk: ${productName}\n` +
+                    `📏 Ukuran: ${size}\n` +
+                    `💰 Harga: ${price}\n\n` +
+                    `*DATA PEMESAN:*\n` +
+                    `👤 Nama: ${fullName}\n` +
+                    `📍 Alamat: ${address}\n\n` +
+                    `Waktu Pesanan: ${new Date().toLocaleString('id-ID')}`;
+
+                // Simpan data di localStorage untuk backup
+                const orderData = {
+                    fullName,
+                    address,
+                    productName,
+                    size,
+                    price,
+                    timestamp: new Date().toLocaleString('id-ID')
+                };
+                localStorage.setItem('lastOrder', JSON.stringify(orderData));
+
+                // Nomor WhatsApp penerima pesanan
+                const whatsappNumber = '62882002125311';
+
+                // Tampilkan toast sukses
+                showToast('Pesanan Berhasil!', 'Dikirim ke WhatsApp dalam 1 detik...', 'success', 2000);
+
+                // Reset form
+                orderForm.reset();
+
+                // Tunggu 1 detik sebelum redirect ke WhatsApp
+                setTimeout(function () {
+                    window.location.href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+                }, 1000);
+            });
+        });
+    </script>
+</body>
+
+</html>

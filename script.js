@@ -74,4 +74,25 @@ document.addEventListener('DOMContentLoaded', function () {
     } else {
         revealElements.forEach(element => element.classList.add('visible'));
     }
+
+    // Handle "Beli Sekarang" button on product detail pages
+    const buyButton = document.querySelector('.buy-button');
+    if (buyButton) {
+        buyButton.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            // Ambil data produk dari halaman
+            const productCard = document.querySelector('.product-detail-card');
+            if (productCard) {
+                const productName = productCard.querySelector('h1')?.textContent.trim() || '';
+                const priceElement = productCard.querySelector('.detail-price');
+                const price = priceElement?.textContent.trim() || '';
+
+                // Redirect ke order form dengan data produk
+                const encodedProduct = encodeURIComponent(productName);
+                const encodedPrice = encodeURIComponent(price);
+                window.location.href = `order-form.html?product=${encodedProduct}&price=${encodedPrice}`;
+            }
+        });
+    }
 });
