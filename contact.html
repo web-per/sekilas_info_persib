@@ -8,6 +8,157 @@
     <link rel="stylesheet" href="css/contact.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="script.js"></script>
+    <style>
+        /* Toast Notification */
+        .toast-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .toast {
+            background: #fff;
+            padding: 24px 32px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            min-width: 320px;
+            opacity: 0;
+            transform: scale(0.8) translateY(20px);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .toast::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, currentColor, transparent);
+            animation: toastProgress 2s linear forwards;
+        }
+
+        @keyframes toastProgress {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        .toast-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .toast-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .toast-title {
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .toast-message {
+            font-size: 14px;
+            font-weight: 500;
+            opacity: 0.8;
+        }
+
+        .toast.error {
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
+            color: #c71c1c;
+            border-left: 5px solid #dc3545;
+        }
+
+        .toast.error .toast-icon {
+            animation: errorShake 0.5s ease-in-out;
+        }
+
+        .toast.success {
+            background: linear-gradient(135deg, #f1f8f4 0%, #e8f5eb 100%);
+            color: #155724;
+            border-left: 5px solid #28a745;
+        }
+
+        .toast.success .toast-icon {
+            animation: successBounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes errorShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        @keyframes successBounce {
+            0% { transform: scale(0) rotate(-45deg); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1) rotate(0); }
+        }
+
+        @media (max-width: 768px) {
+            .toast {
+                min-width: 280px;
+                padding: 18px 24px;
+                font-size: 15px;
+            }
+
+            .toast-icon {
+                font-size: 22px;
+            }
+
+            .toast-title {
+                font-size: 15px;
+            }
+
+            .toast-message {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .toast {
+                min-width: 260px;
+                padding: 16px 20px;
+            }
+
+            .toast-icon {
+                font-size: 20px;
+            }
+
+            .toast-title {
+                font-size: 14px;
+            }
+
+            .toast-message {
+                font-size: 12px;
+            }
+        }
+    </style>
     <title>Kontak - Sekilas Info Persib</title>
 </head>
 
@@ -148,6 +299,93 @@
             </a>
         </div>
     </nav>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        // Fungsi untuk menampilkan toast notification
+        function showToast(title, message = '', type = 'success', duration = 2000) {
+            const toastContainer = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            
+            let icon = '';
+            if (type === 'success') {
+                icon = '✓';
+            } else if (type === 'error') {
+                icon = '⚠';
+            }
+            
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <div class="toast-icon">${icon}</div>
+                <div class="toast-content">
+                    <div class="toast-title">${title}</div>
+                    ${message ? `<div class="toast-message">${message}</div>` : ''}
+                </div>
+            `;
+            
+            toastContainer.appendChild(toast);
+            
+            // Trigger animation
+            setTimeout(() => toast.classList.add('show'), 10);
+            
+            // Hapus toast setelah duration
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 400);
+            }, duration);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Handle contact form submission
+            const contactForm = document.querySelector('.contact-form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    const name = document.getElementById('name').value.trim();
+                    const email = document.getElementById('email').value.trim();
+                    const message = document.getElementById('message').value.trim();
+
+                    // Validasi
+                    if (!name || !email || !message) {
+                        showToast('Oops!', 'Harap isi semua field', 'error', 2000);
+                        return;
+                    }
+
+                    // Format pesan untuk WhatsApp
+                    const whatsappMessage = `*PESAN DARI KONTAK*\n\n` +
+                        `👤 Nama: ${name}\n` +
+                        `📧 Email: ${email}\n\n` +
+                        `*Pesan:*\n${message}\n\n` +
+                        `Waktu: ${new Date().toLocaleString('id-ID')}`;
+
+                    // Simpan data di localStorage untuk backup
+                    const contactData = {
+                        name,
+                        email,
+                        message,
+                        timestamp: new Date().toLocaleString('id-ID')
+                    };
+                    localStorage.setItem('lastContact', JSON.stringify(contactData));
+
+                    // Nomor WhatsApp penerima
+                    const whatsappNumber = '62882002125311';
+
+                    // Tampilkan toast sukses
+                    showToast('Pesan Terkirim!', 'Dikirim ke WhatsApp dalam 1 detik...', 'success', 2000);
+
+                    // Reset form
+                    contactForm.reset();
+
+                    // Tunggu 1 detik sebelum redirect ke WhatsApp
+                    setTimeout(function () {
+                        window.location.href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+                    }, 1000);
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>
