@@ -486,7 +486,7 @@
                     `💰 Harga: ${price}\n\n` +
                     `*DATA PEMESAN:*\n` +
                     `👤 Nama: ${fullName}\n` +
-                    `📍 Alamat: ${address}\n\n` +
+                    `📍 Alamat Pengiriman: ${address}\n\n` +
                     `Waktu Pesanan: ${new Date().toLocaleString('id-ID')}`;
 
                 // Simpan data di localStorage untuk backup
@@ -501,7 +501,7 @@
                 localStorage.setItem('lastOrder', JSON.stringify(orderData));
 
                 // Nomor WhatsApp penerima pesanan
-                const whatsappNumber = '62882002125311';
+                const whatsappNumber = '6282320605199';
 
                 // Tampilkan toast sukses
                 showToast('Pesanan Berhasil!', 'Dikirim ke WhatsApp dalam 1 detik...', 'success', 2000);
