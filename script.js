@@ -44,8 +44,8 @@ document.addEventListener('DOMContentLoaded', function () {
         '.benefit-card',
         '.section-top',
         '.product-card',
-        '.cta-section',
-        '.whatsapp-card',
+        // '.cta-section',
+        // '.whatsapp-card',
         '.sponsor-section',
         '.sponsor-card'
     ];
