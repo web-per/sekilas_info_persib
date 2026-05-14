@@ -386,9 +386,9 @@
                 </div>
 
                 <div class="form-row">
-                    <div class="form-group">
-                        <label for="color">Warna *</label>
-                        <input type="text" id="color" name="color" readonly class="readonly-field" required>
+                    <div class="form-group" id="colorGroup">
+                        <label for="color">Warna</label>
+                        <input type="text" id="color" name="color" readonly class="readonly-field">
                     </div>
                     <div class="form-group">
                         <label for="price">Harga *</label>
@@ -479,6 +479,7 @@
             const productName = params.get('product');
             const price = params.get('price');
             const color = params.get('color');
+            const colorGroup = document.getElementById('colorGroup');
 
             // Isi field otomatis
             if (productName) {
@@ -489,6 +490,8 @@
             }
             if (color) {
                 document.getElementById('color').value = decodeURIComponent(color);
+            } else if (colorGroup) {
+                colorGroup.style.display = 'none';
             }
 
             // Handle submit form
@@ -503,20 +506,22 @@
                 const color = document.getElementById('color').value;
                 const price = document.getElementById('price').value;
 
-                if (!fullName || !address || !size || !color) {
+                if (!fullName || !address || !size) {
                     showToast('Oops!', 'Harap isi semua field yang bertanda *', 'error', 2000);
                     return;
                 }
 
                 // Format pesan untuk WhatsApp
-                const message = `*PESANAN BARU*\n\n` +
-                    `📦 Produk: ${productName}\n` +
-                    `📏 Ukuran: ${size}\n` +
-                    `🎨 Warna: ${color}\n` +
-                    `💰 Harga: ${price}\n\n` +
+                let message = `*PESANAN BARU*\n\n` +
+                    `Produk: ${productName}\n`;
+                if (color) {
+                    message += `Warna: ${color}\n`;
+                }
+                message += `Harga: ${price}\n` +
+                    `Ukuran: ${size}\n\n` +
                     `*DATA PEMESAN:*\n` +
-                    `👤 Nama: ${fullName}\n` +
-                    `📍 Alamat Pengiriman: ${address}\n\n` +
+                    `Nama: ${fullName}\n` +
+                    `Alamat Pengiriman: ${address}\n\n` +
                     `Waktu Pesanan: ${new Date().toLocaleString('id-ID')}`;
 
                 // Simpan data di localStorage untuk backup
@@ -525,10 +530,12 @@
                     address,
                     productName,
                     size,
-                    color,
                     price,
                     timestamp: new Date().toLocaleString('id-ID')
                 };
+                if (color) {
+                    orderData.color = color;
+                }
                 localStorage.setItem('lastOrder', JSON.stringify(orderData));
 
                 // Nomor WhatsApp penerima pesanan
