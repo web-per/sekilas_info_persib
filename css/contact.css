@@ -261,13 +261,11 @@
 .footer {
     width: 80%;
     margin: auto;
+    margin-top: 20px;
     background: #f7f8fc;
-
     border: 1px solid rgba(0, 0, 0, 0.06);
     border-radius: 28px;
-
     padding: 36px;
-
     position: relative;
     overflow: hidden;
 }
@@ -433,8 +431,7 @@
     }
 
     .footer {
-        width: 94%;
-        padding: 24px 18px;
+        width: 95%;
         border-radius: 22px;
     }
 
