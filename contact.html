@@ -55,6 +55,7 @@
             from {
                 width: 0;
             }
+
             to {
                 width: 100%;
             }
@@ -108,18 +109,62 @@
         }
 
         @keyframes errorShake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            75% {
+                transform: translateX(5px);
+            }
         }
 
         @keyframes successBounce {
-            0% { transform: scale(0) rotate(-45deg); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1) rotate(0); }
+            0% {
+                transform: scale(0) rotate(-45deg);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1) rotate(0);
+            }
         }
 
         @media (max-width: 768px) {
+            .social-section {
+                padding: 45px 20px;
+            }
+
+            .social-logo {
+                width: 130px;
+                height: 130px;
+            }
+
+            .social-header h2 {
+                font-size: 42px;
+            }
+
+            .social-header p {
+                font-size: 22px;
+                margin-bottom: 35px;
+            }
+
+            .social-icons {
+                gap: 28px;
+            }
+
+            .social-icons a {
+                font-size: 52px;
+            }
+
             .toast {
                 min-width: 280px;
                 padding: 18px 24px;
@@ -140,6 +185,35 @@
         }
 
         @media (max-width: 480px) {
+            .social-section {
+                padding: 35px 16px;
+                border-radius: 22px;
+            }
+
+            .social-logo {
+                width: 100px;
+                height: 100px;
+                margin-bottom: 22px;
+            }
+
+            .social-header h2 {
+                font-size: 30px;
+            }
+
+            .social-header p {
+                font-size: 17px;
+                line-height: 1.5;
+                margin-bottom: 28px;
+            }
+
+            .social-icons {
+                gap: 20px;
+            }
+
+            .social-icons a {
+                font-size: 40px;
+            }
+
             .toast {
                 min-width: 260px;
                 padding: 16px 20px;
@@ -226,24 +300,32 @@
             </form>
 
             <section class="social-section">
-                <h2>Ikuti Kami</h2>
-                <div class="social-grid">
-                    <a href="https://www.instagram.com/sekilas_infopersib/" class="social-link" target="_blank">
+                <div class="social-header">
+                    <img src="img/Logo-SIP.png" alt="Bandung Football" class="social-logo">
+
+                    <h2>Bandung Football</h2>
+
+                    <p>
+                        Follow our other social media
+                        <span class="arrow-down">⬇</span>
+                    </p>
+                </div>
+
+                <div class="social-icons">
+                    <a href="https://www.instagram.com/sekilas_infopersib/" target="_blank">
                         <i class="fab fa-instagram"></i>
-                        <span>Instagram</span>
                     </a>
-                    <a href="#" class="social-link" target="_blank">
-                        <i class="fab fa-facebook-f"></i>
-                        <span>Facebook</span>
-                    </a>
-                    <a href="#" class="social-link" target="_blank">
-                        <i class="fab fa-twitter"></i>
-                        <span>Twitter</span>
-                    </a>
-                    <a href="https://youtube.com/@sekilasinfopersib5685?si=5PVWWkWklufu5fL-" class="social-link"
-                        target="_blank">
+
+                    <a href="https://youtube.com/@sekilasinfopersib5685?si=5PVWWkWklufu5fL-" target="_blank">
                         <i class="fab fa-youtube"></i>
-                        <span>YouTube</span>
+                    </a>
+
+                    <a href="#" target="_blank">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+
+                    <a href="#" target="_blank">
+                        <i class="fab fa-facebook-f"></i>
                     </a>
                 </div>
             </section>
@@ -306,14 +388,14 @@
         function showToast(title, message = '', type = 'success', duration = 2000) {
             const toastContainer = document.getElementById('toastContainer');
             const toast = document.createElement('div');
-            
+
             let icon = '';
             if (type === 'success') {
                 icon = '✓';
             } else if (type === 'error') {
                 icon = '⚠';
             }
-            
+
             toast.className = `toast ${type}`;
             toast.innerHTML = `
                 <div class="toast-icon">${icon}</div>
@@ -322,12 +404,12 @@
                     ${message ? `<div class="toast-message">${message}</div>` : ''}
                 </div>
             `;
-            
+
             toastContainer.appendChild(toast);
-            
+
             // Trigger animation
             setTimeout(() => toast.classList.add('show'), 10);
-            
+
             // Hapus toast setelah duration
             setTimeout(() => {
                 toast.classList.remove('show');
@@ -372,14 +454,16 @@
                     const whatsappNumber = '6282320605199';
 
                     // Tampilkan toast sukses
-                    showToast('Pesan Terkirim!', 'Dikirim ke WhatsApp dalam 1 detik...', 'success', 2000);
+                    showToast('Pesan Terkirim!', 'Dikirim ke WhatsApp dalam 1 detik...', 'success',
+                        2000);
 
                     // Reset form
                     contactForm.reset();
 
                     // Tunggu 1 detik sebelum redirect ke WhatsApp
                     setTimeout(function () {
-                        window.location.href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+                        window.location.href =
+                            `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
                     }, 1000);
                 });
             }

@@ -5,11 +5,119 @@
     justify-content: center;
 }
 
-.contact-section {
-    width: 100%;
-    max-width: 900px;
-    padding: 40px;
-    border-radius: 28px;
+.social-section {
+    margin-top: 40px;
+    padding: 38px 24px;
+    border-radius: 26px;
+    background: #0033A0;
+    text-align: center;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+}
+
+.social-section::before {
+    content: "";
+    position: absolute;
+    top: -80px;
+    right: -80px;
+    width: 220px;
+    height: 220px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+}
+
+.social-section::after {
+    content: "";
+    position: absolute;
+    bottom: -100px;
+    left: -100px;
+    width: 240px;
+    height: 240px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+}
+
+.social-header {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.social-header h2 {
+    font-size: 34px;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 10px;
+    line-height: 1.2;
+}
+
+.social-header p {
+    font-size: 18px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.92);
+    margin-bottom: 34px;
+}
+
+.arrow-down {
+    margin-left: 6px;
+}
+
+.social-logo {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.14);
+    margin-bottom: 18px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+}
+
+.social-icons {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 26px;
+    flex-wrap: wrap;
+}
+
+.social-icons a {
+    width: 72px;
+    height: 72px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 20px;
+
+    background: rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(10px);
+
+    color: #fff;
+    font-size: 34px;
+
+    text-decoration: none;
+
+    transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+    transform: translateY(-6px);
+    background: rgba(255, 255, 255, 0.22);
+}
+
+.social-icons a i {
+    transition: transform 0.3s ease;
+}
+
+.social-icons a:hover i {
+    transform: scale(1.08);
 }
 
 .contact-intro {
@@ -117,7 +225,7 @@
 
 .social-section h2 {
     font-size: 24px;
-    color: #0033A0;
+    color: white;
     margin-bottom: 20px;
 }
 
@@ -384,5 +492,67 @@
 
     .footer-bottom p {
         font-size: 13px;
+    }
+}
+
+@media (max-width: 768px) {
+    .social-section {
+        padding: 30px 18px;
+        border-radius: 22px;
+    }
+
+    .social-logo {
+        width: 85px;
+        height: 85px;
+        margin-bottom: 14px;
+    }
+
+    .social-header h2 {
+        font-size: 26px;
+    }
+
+    .social-header p {
+        font-size: 15px;
+        margin-bottom: 24px;
+    }
+
+    .social-icons {
+        gap: 16px;
+    }
+
+    .social-icons a {
+        width: 58px;
+        height: 58px;
+        font-size: 26px;
+        border-radius: 16px;
+    }
+
+    .social-icons a i {
+        font-size: 26px;
+    }
+}
+
+@media (max-width: 480px) {
+    .social-section {
+        padding: 24px 14px;
+    }
+
+    .social-header h2 {
+        font-size: 22px;
+    }
+
+    .social-header p {
+        font-size: 13px;
+    }
+
+    .social-icons {
+        gap: 12px;
+    }
+
+    .social-icons a {
+        width: 50px;
+        height: 50px;
+        font-size: 22px;
+        border-radius: 14px;
     }
 }
