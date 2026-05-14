@@ -207,6 +207,7 @@
             from {
                 width: 0;
             }
+
             to {
                 width: 100%;
             }
@@ -260,15 +261,33 @@
         }
 
         @keyframes errorShake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            75% {
+                transform: translateX(5px);
+            }
         }
 
         @keyframes successBounce {
-            0% { transform: scale(0) rotate(-45deg); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1) rotate(0); }
+            0% {
+                transform: scale(0) rotate(-45deg);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1) rotate(0);
+            }
         }
 
         /* MOBILE */
@@ -368,20 +387,25 @@
 
                 <div class="form-row">
                     <div class="form-group">
+                        <label for="color">Warna *</label>
+                        <input type="text" id="color" name="color" readonly class="readonly-field" required>
+                    </div>
+                    <div class="form-group">
                         <label for="price">Harga *</label>
                         <input type="text" id="price" name="price" readonly class="readonly-field" required>
                     </div>
-                    <div class="form-group">
-                        <label for="size">Ukuran *</label>
-                        <select id="size" name="size" required>
-                            <option value="">Pilih ukuran</option>
-                            <option value="S">S (Kecil)</option>
-                            <option value="M">M (Sedang)</option>
-                            <option value="L">L (Besar)</option>
-                            <option value="XL">XL (Ekstra Besar)</option>
-                            <option value="XXL">XXL (Ekstra Ekstra Besar)</option>
-                        </select>
-                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 20px;">
+                    <label for="size">Ukuran *</label>
+                    <select id="size" name="size" required>
+                        <option value="">Pilih ukuran</option>
+                        <option value="S">S (Kecil)</option>
+                        <option value="M">M (Sedang)</option>
+                        <option value="L">L (Besar)</option>
+                        <option value="XL">XL (Ekstra Besar)</option>
+                        <option value="XXL">XXL (Ekstra Ekstra Besar)</option>
+                    </select>
                 </div>
 
                 <div class="form-group" style="margin-top: 20px;">
@@ -420,14 +444,14 @@
         function showToast(title, message = '', type = 'success', duration = 2000) {
             const toastContainer = document.getElementById('toastContainer');
             const toast = document.createElement('div');
-            
+
             let icon = '';
             if (type === 'success') {
                 icon = '✓';
             } else if (type === 'error') {
                 icon = '⚠';
             }
-            
+
             toast.className = `toast ${type}`;
             toast.innerHTML = `
                 <div class="toast-icon">${icon}</div>
@@ -436,12 +460,12 @@
                     ${message ? `<div class="toast-message">${message}</div>` : ''}
                 </div>
             `;
-            
+
             toastContainer.appendChild(toast);
-            
+
             // Trigger animation
             setTimeout(() => toast.classList.add('show'), 10);
-            
+
             // Hapus toast setelah duration
             setTimeout(() => {
                 toast.classList.remove('show');
@@ -454,6 +478,7 @@
             const params = new URLSearchParams(window.location.search);
             const productName = params.get('product');
             const price = params.get('price');
+            const color = params.get('color');
 
             // Isi field otomatis
             if (productName) {
@@ -461,6 +486,9 @@
             }
             if (price) {
                 document.getElementById('price').value = decodeURIComponent(price);
+            }
+            if (color) {
+                document.getElementById('color').value = decodeURIComponent(color);
             }
 
             // Handle submit form
@@ -472,9 +500,10 @@
                 const address = document.getElementById('address').value.trim();
                 const productName = document.getElementById('productName').value;
                 const size = document.getElementById('size').value;
+                const color = document.getElementById('color').value;
                 const price = document.getElementById('price').value;
 
-                if (!fullName || !address || !size) {
+                if (!fullName || !address || !size || !color) {
                     showToast('Oops!', 'Harap isi semua field yang bertanda *', 'error', 2000);
                     return;
                 }
@@ -483,6 +512,7 @@
                 const message = `*PESANAN BARU*\n\n` +
                     `📦 Produk: ${productName}\n` +
                     `📏 Ukuran: ${size}\n` +
+                    `🎨 Warna: ${color}\n` +
                     `💰 Harga: ${price}\n\n` +
                     `*DATA PEMESAN:*\n` +
                     `👤 Nama: ${fullName}\n` +
@@ -495,6 +525,7 @@
                     address,
                     productName,
                     size,
+                    color,
                     price,
                     timestamp: new Date().toLocaleString('id-ID')
                 };
@@ -511,7 +542,8 @@
 
                 // Tunggu 1 detik sebelum redirect ke WhatsApp
                 setTimeout(function () {
-                    window.location.href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+                    window.location.href =
+                        `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
                 }, 1000);
             });
         });

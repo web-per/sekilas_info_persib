@@ -87,12 +87,45 @@ document.addEventListener('DOMContentLoaded', function () {
                 const productName = productCard.querySelector('h1')?.textContent.trim() || '';
                 const priceElement = productCard.querySelector('.detail-price');
                 const price = priceElement?.textContent.trim() || '';
+                const colorButton = document.querySelector('.color-btn.active');
+                const selectedColor = colorButton?.textContent.trim() || '';
 
                 // Redirect ke order form dengan data produk
                 const encodedProduct = encodeURIComponent(productName);
                 const encodedPrice = encodeURIComponent(price);
-                window.location.href = `order-form.html?product=${encodedProduct}&price=${encodedPrice}`;
+                let redirectUrl = `order-form.html?product=${encodedProduct}&price=${encodedPrice}`;
+                if (selectedColor) {
+                    redirectUrl += `&color=${encodeURIComponent(selectedColor)}`;
+                }
+                window.location.href = redirectUrl;
             }
         });
     }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const buttons = document.querySelectorAll(".color-btn");
+    const productImage = document.getElementById("productImage");
+
+    buttons.forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            // hapus active dari semua tombol
+            buttons.forEach(btn => {
+                btn.classList.remove("active");
+            });
+
+            // tambahkan active ke tombol dipilih
+            button.classList.add("active");
+
+            // ganti gambar
+            const newImage = button.getAttribute("data-image");
+            productImage.src = newImage;
+
+        });
+
+    });
+
 });
